@@ -1,6 +1,6 @@
 from collections import Counter
 
-class LinearCounter(Counter):
+class linearCounter(Counter):
     def __add__(self, other):
         '''Add counts from two LinearCounters.
 
