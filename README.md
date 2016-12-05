@@ -8,7 +8,7 @@ Example
 -------
 
 ```Python
-from linearCounter.linearCounter import LinearCounter as lCnt
+from linearCounter import linearCounter as lCnt
 
 x = lCnt({'H':10, 'O':5})
 y = lCnt({'H':10.2, 'O':5.1})
