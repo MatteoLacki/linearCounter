@@ -11,9 +11,9 @@ class linearCounter(Counter):
         LinearCounter({'H': -2, 'Y': 10, 'Z': 3})
 
         '''
-        if not isinstance(other, LinearCounter):
+        if not isinstance(other, linearCounter):
             return NotImplemented
-        result = LinearCounter()
+        result = linearCounter()
         for elem, count in self.items():
             newcount = count + other[elem]
             result[elem] = newcount
@@ -24,15 +24,15 @@ class linearCounter(Counter):
         return result
 
     def __radd__(self, other):
-        '''Add counts from two LinearCounters.'''
+        '''Add counts from two linearCounters.'''
         if other == 0:
             return self
         else:
             return self.__add__(other)
 
     def __iadd__(self, other):
-        '''Add counts from two LinearCounters.'''
-        if not isinstance(other, LinearCounter):
+        '''Add counts from two linearCounters.'''
+        if not isinstance(other, linearCounter):
             return NotImplemented
         for elem in self.keys():
             self[elem] += other[elem]
@@ -44,7 +44,7 @@ class linearCounter(Counter):
     def __isub__(self, other):
         '''Substracts counts from two LinearCounters.
         '''
-        if not isinstance(other, LinearCounter):
+        if not isinstance(other, linearCounter):
             return NotImplemented
         for elem in self.keys():
             self[elem] -= other[elem]
@@ -54,15 +54,15 @@ class linearCounter(Counter):
         return self
 
     def __mul__(self, scalar):
-        '''Multiplies the values stored in the LinearCounter by the scalar.'''
-        result = LinearCounter()
+        '''Multiplies the values stored in the linearCounter by the scalar.'''
+        result = linearCounter()
         for elem, count in self.items():
             result[elem] = count*scalar
         return result
 
     def __rmul__(self, scalar):
-        '''Multiplies the values stored in the LinearCounter by the scalar.'''
-        result = LinearCounter()
+        '''Multiplies the values stored in the linearCounter by the scalar.'''
+        result = linearCounter()
         for elem, count in self.items():
             result[elem] = count*scalar
         return result
