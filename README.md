@@ -16,9 +16,14 @@ z = lCnt({'H':10.3, 'O':5.112, 'M':24232.232})
 
 x += y
 print(x)
+# linearCounter({'H': 20.2, 'O': 10.1})
+
 x -= z
 print(x)
+# linearCounter({'H': 9.899999999999999, 'M': -24232.232, 'O': 4.9879999999999995})
+
 print(sum([x,y,z]))
+# linearCounter({'H': 30.4, 'M': 0.0, 'O': 15.2})
 
 # see - it works
 ```
