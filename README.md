@@ -33,6 +33,6 @@ Watch out
 
 Of course we have to always assume something:
 * the dimensions that are unnamed will be assumed to be equal to zero.
-> This is natural: whoever doesn't exist in a linear space should be assumed to be a 0.
-
-*Presumably said by Hilbert while playing golf.*
+    * This is natural: whoever doesn't exist in a linear space should be assumed to be a 0.
+    * *Presumably said by Hilbert while playing golf*
+* it is all pure Python - so don't expect efficiency wonders: use pypy.
