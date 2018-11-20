@@ -3,7 +3,7 @@ from distutils.core import setup
 setup(
     name          = 'linearCounter',
     packages      = ['linearCounter'], # this must be the same as the name above
-    version       = '0.23',
+    version       = '0.5',
     description   = 'A trivial extension to collections.Counter that enables linear operations.',
     author        = 'Mateusz Lacki',
     author_email  = 'matteo.lacki@gmail.com',

@@ -4,6 +4,13 @@ This is a Python module that extends the counters to any linear operations.
 It's bloody simple.
 Think of it as infinitely dimensional sparse array (hehe).
 
+Installation
+------------
+```batch
+pip3 install linearCounter
+```
+Yes, I'm afraid Python3 is all there is for now.
+
 Example
 -------
 
