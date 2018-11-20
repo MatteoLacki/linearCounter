@@ -1,68 +1,83 @@
-from collections import Counter
+from operator import add, mul, truediv, sub, floordiv
+from math import inf
 
-class linearCounter(Counter):
-    def __add__(self, other):
-        '''Add counts from two LinearCounters.
 
-        >>> LinearCounter('abbb') + LinearCounter('bcc')
-        Counter({'b': 4, 'c': 2, 'a': 1})
+class LC(dict):
+    """A dictionary extended to linear operations.
 
-        >>> LinearCounter({'H':-4, 'Y':10}) + LinearCounter({'H=2','Z':3})
+    >>> LinearCounter({'H':-4, 'Y':10}) + LinearCounter({'H=2','Z':3})
         LinearCounter({'H': -2, 'Y': 10, 'Z': 3})
+    """
+    def __setitem__(self, key, value):
+        if value == 0:
+            del self[key]
+        else:
+            super().__setitem__(key, value)
 
-        '''
-        if not isinstance(other, linearCounter):
-            return NotImplemented
-        result = linearCounter()
-        for elem, count in self.items():
-            newcount = count + other[elem]
-            result[elem] = newcount
+    def __getitem__(self, key):
+        return self.get(key, 0)
 
-        for elem, count in other.items():
-            if elem not in self:
-                result[elem] = count
-        return result
+    def __add__(self, other):
+        o = self.copy()
+        return o if other == 0 else o.__do(other, add)
+
+    def __sub__(self, other):
+        o = self.copy()
+        return o if other == 0 else o.__do(other, sub)
+
+    def __mul__(self, other):
+        o = self.copy()
+        return o if other == 1 else o.__do(other, mul)
+
+    def __truediv__(self, other):
+        o = self.copy()
+        if other == 1:
+            return o
+        elif other == inf:
+            return o*0
+        else:
+            return o.__do(other, truediv)
+
+    def __flooordiv__(self, other):
+        o = self.copy()
+        if other == 1:
+            return o
+        elif other == inf:
+            return o*0
+        else:
+            return o.__do(other, floordiv)
 
     def __radd__(self, other):
-        '''Add counts from two linearCounters.'''
-        if other == 0:
+        return self.__add__(other)
+
+    def __rsub__(self, other):
+        return self.__sub__(other)
+
+    def __rmul__(self, other):
+        return self.__mul__(other)
+
+    def __rdiv__(self, other):
+        return self.__div__(other)
+
+    def __do(self, other, op):
+        try:
+            for k in set().union(self, other):
+                self[k] = op(self[k], other[k])
             return self
-        else:
-            return self.__add__(other)
+        except KeyError:
+            print("Coordinate-wise division works only if objects share keys.")
+            raise
+        except (TypeError, AttributeError):
+            try:
+                for k in list(self.keys()):
+                    self[k] = op(self.get(k, 0), other)
+                return self
+            except (TypeError, AttributeError):
+                print("Operation supported only for dict-like structures and scalars.")
+                raise
 
-    def __iadd__(self, other):
-        '''Add counts from two linearCounters.'''
-        if not isinstance(other, linearCounter):
-            return NotImplemented
-        for elem in self.keys():
-            self[elem] += other[elem]
-        for elem, count in other.items():
-            if elem not in self:
-                self[elem] = count
-        return self
+    def __repr__(self):
+        return "LC" + super().__repr__()
 
-    def __isub__(self, other):
-        '''Substracts counts from two LinearCounters.
-        '''
-        if not isinstance(other, linearCounter):
-            return NotImplemented
-        for elem in self.keys():
-            self[elem] -= other[elem]
-        for elem, count in other.items():
-            if elem not in self:
-                self[elem] = -count
-        return self
-
-    def __mul__(self, scalar):
-        '''Multiplies the values stored in the linearCounter by the scalar.'''
-        result = linearCounter()
-        for elem, count in self.items():
-            result[elem] = count*scalar
-        return result
-
-    def __rmul__(self, scalar):
-        '''Multiplies the values stored in the linearCounter by the scalar.'''
-        result = linearCounter()
-        for elem, count in self.items():
-            result[elem] = count*scalar
-        return result
+    def copy(self):
+        return self.__class__(self)

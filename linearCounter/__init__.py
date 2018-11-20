@@ -1,1 +1,1 @@
-from linearCounter import linearCounter
+from linearCounter.linearCounter import LC
